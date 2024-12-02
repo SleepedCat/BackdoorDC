@@ -22,4 +22,32 @@ Dataset Condensation/Distillation
   - [D^4: Dataset Distillation via Disentangled Diffusion Model](https://openaccess.thecvf.com/content/CVPR2024/html/Su_D4_Dataset_Distillation_via_Disentangled_Diffusion_Model_CVPR_2024_paper.html)
 
 <h3  id="NDSS2023Liu">Backdoor Attacks Against Dataset Distillation (NDSS2023)</h3>
-1. 
+
+1. Overview
+* Problem: The existing dataset distillation techniques mainly aim at achieving the best trade-off between resource usage efficiency and model utility. The security risks (backdoor attacks) stemming from the have not been explored.  
+* Scenario: In the image domain.  
+* Contribution: NAIVEATTACK 【simply add pre-defined triggers to the raw data】 & DOORPING 【updates the triggers during the entire distillation procedure】.  
+
+2. Motivation
+* Assumption: Considering the backdoor attack that a malicious dataset distillation service provider can launch from the upstream (_i.e._, data distillation provider).
+* Weakness of classic backdoor attacks: The classic attacks cannot be directly applied to the distilled datasets to backdoor the downstream models since these distilled datasets are small and not sufficient enough to inject the backdoor. (1) Human inspection can quickly mitigate such attacks. (2) Attack success rate is low.
+
+3. Why DOORPING
+* Triggers may not always be retained in the distilled dataset.
+* Result: Empirical results show that both of our attacks maintain high model utility. NAIVEATTACK achieves a reasonable attack success rate (ASR) in some cases, while DOORPING consistently attains a higher ASR (close to 100%) in all cases.
+
+4. Metric
+* ASR, Attack Success Rate: Measures the success rate in making the model generate wrong predictions to the target label given triggered samples.
+* CTA, Clean Test Accuracy: Evaluates the utility of the model given clean samples.
+
+5. Threat Model
+* Attack scenarios: 1) the victim commissions the attacker to distill a specific dataset on their behalf. 2) Instead of buying the original training dataset with millions of images, the victim opts to purchase a smaller synthesized dataset from the attacker to reduce the cost. (on the practical side)
+* Attacker's capability: The only capability the attacker has is controlling the dataset distillation process. We stress that the attacker does not interfere with the downstream model training.
+* Attacker's Goal: __The trigger is negligible and indistinguishable to the human moderators to avoid visual mitigation but remains effective in the downstream tasks.__
+* Attack challenge: 1) The attackers must first ensure that the backdoored distilled dataset can guarantee the downstream model utility. 2) they need to ensure that the triggers are indistinguishable from the potential human inspection. 3) Finally, the attackers must make sure that the backdoor can be effectively implanted in the downstream models.
+
+6. NAIVEATTACK: $$\mathcal{A}_{naive}(x)=x\cdot(1-m)+t\cdot m$$
+
+7. DOORPING: 1) update trigger 2) inject trigger.
+
+
