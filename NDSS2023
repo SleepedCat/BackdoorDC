@@ -1,0 +1,4 @@
+Motivation: the existing dataset distillation techniques mainly aim at achieving the best trade-off between resource usage efficiency and model utility. The security risks stemming from the have not been explored.
+Senario: In the image domain.
+Contribution: NAIVEATTACK 【simply add triggers to the raw data】 & DOORPING 【updates the triggers during the entire distillation procedure】.
+
